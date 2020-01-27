@@ -1,3 +1,6 @@
+from functools import total_ordering
+
+@total_ordering
 class Account:
 
     def __init__(self, name, start_balance=0):
@@ -15,17 +18,10 @@ class Account:
         return len(self._transactions)
 
 
-    ## TODO -- make this much more concise with functools.total_ordering
     def __gt__(self, account):
         return self.balance > account.balance
-    def __lt__(self, account):
-        return self.balance < account.balance
     def __eq__(self, account):
         return self.balance == account.balance
-    def __ge__(self, account):
-        return self.balance >= account.balance
-    def __le__(self, account):
-        return self.balance <= account.balance
 
 
     def __getitem__(self, index):
