@@ -1,4 +1,4 @@
-class JsObject:
+class JsObject(dict):
     """A Python dictionary that provides attribute-style access
        just like a JS object:
 
@@ -9,4 +9,25 @@ class JsObject:
        Try this on a regular dict and you get
        AttributeError: 'dict' object has no attribute 'foo'
     """
-    pass
+
+    def __getattr__(self, name):
+        if name in self.__dict__:
+            return self.__dict__["name"]
+
+        if name in self:
+            return self[name]
+
+        raise AttributeError("'{}' object has no attribute '{}'".format(type(self), name))
+    
+    def __setattr__(self, name, value):
+        if name in self.__dict__:
+            object.__setattr__(self, name, value)
+
+        self[name] = value
+
+    def __delattr__(self, name):
+        if name in self.__dict__:
+            object.__delttr__(self, name)
+
+        del self[name]
+
