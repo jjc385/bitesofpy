@@ -34,3 +34,20 @@ def test_with_contextman_performs_rollback(account):
         acc + 10
         acc - 3
     assert account.balance == 10
+
+def test_partially_valid_transactions(account):
+    account + 3
+    assert account.balance == 3
+    with account as acc:
+        acc + 1
+        acc - 5
+    assert account.balance == 4
+
+def test_early_invalid_transaction(account):
+    account + 3
+    assert account.balance == 3
+    with account as acc:
+        acc - 5
+        acc + 10
+#    assert (account.balance == 3 or account.balance == 13)
+    assert account.balance == 13
