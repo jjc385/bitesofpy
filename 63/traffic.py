@@ -4,12 +4,18 @@ from time import sleep
 
 State = namedtuple('State', 'color command timeout')
 
+states = [
+    State("red", "Stop", 2),
+    State("green", "Go", 2),
+    State("amber", "Caution", 0.5),
+    ]
+
 
 def traffic_light():
     """Returns an itertools.cycle iterator that
        when iterated over returns State namedtuples
        as shown in the Bite's description"""
-    pass
+    return cycle(states)
 
 
 if __name__ == '__main__':
